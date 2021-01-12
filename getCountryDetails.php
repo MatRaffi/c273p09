@@ -2,17 +2,19 @@
 
 include "dbFunctions.php";
 
-// SQL query returns multiple database records.
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-
-    $response = array();
-    $query = "SELECT * FROM statistics order by id=$id";
+    
+     $student = array();
+    $query = "SELECT * FROM statistics where id = $id";
     $result = mysqli_query($link, $query);
 
-    $response = mysqli_fetch_assoc($result);
-
+    $row = mysqli_fetch_assoc($result);
+    if(!empty($row)) {
+        $statistics = $row;
+    }
     mysqli_close($link);
 
-    echo json_encode($response);
+    echo json_encode($statistics);
 }
+?>
